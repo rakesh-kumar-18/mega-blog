@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Models } from 'appwrite';
 
 interface AuthState {
     status: boolean;
-    userData: null;
+    userData: Models.User<Models.Preferences> | null;
 }
 
 const initialState: AuthState = {
@@ -14,7 +15,7 @@ export const counterSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<null>) {
+        login(state, action: PayloadAction<Models.User<Models.Preferences>>) {
             state.status = true;
             state.userData = action.payload;
         },

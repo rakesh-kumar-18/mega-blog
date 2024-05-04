@@ -1,6 +1,12 @@
 import { Client, Account, ID } from "appwrite";
 import conf from "../conf/conf";
 
+export interface UserDetails {
+    email: string;
+    password: string;
+    name: string;
+}
+
 class AuthService {
     client = new Client();
     account;
@@ -13,7 +19,7 @@ class AuthService {
         this.account = new Account(this.client);
     }
 
-    async createAccount({ email, password, name }: { email: string, password: string, name: string; }) {
+    async createAccount({ email, password, name }: UserDetails) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
 
@@ -27,7 +33,7 @@ class AuthService {
         }
     }
 
-    async login({ email, password }: { email: string, password: string; }) {
+    async login({ email, password }: Omit<UserDetails, "name">) {
         try {
             return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
