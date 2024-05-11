@@ -8,8 +8,8 @@ export interface UserDetails {
 }
 
 class AuthService {
-    client = new Client();
-    account;
+    client: Client = new Client();
+    account: Account;
 
     constructor() {
         this.client
