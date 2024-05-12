@@ -1,3 +1,4 @@
+import { Container, Logo, LogoutBtn } from "../index";
 
 function Header() {
     return (
