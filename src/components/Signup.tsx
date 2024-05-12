@@ -1,23 +1,24 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../features/auth/authSlice";
 import authService from "../appwrite/auth";
-import { Button, Input, Logo } from "./index";
-import { useAppDispatch } from "../app/hooks";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { login } from "../features/auth/authSlice";
+import { useAppDispatch } from "../app/hooks";
+import { useState } from "react";
+import { Button, Input, Logo } from ".";
 
 interface IFormInput {
     email: string;
     password: string;
+    name: string;
 }
 
-function Login() {
-    const dispatch = useAppDispatch();
+function Signup() {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { register, handleSubmit } = useForm<IFormInput>();
     const [error, setError] = useState("");
 
-    const handleLogin: SubmitHandler<IFormInput> = async (data) => {
+    const handleSignup: SubmitHandler<IFormInput> = async (data) => {
         setError("");
 
         const getErrorMessage = (error: unknown) => {
@@ -26,7 +27,7 @@ function Login() {
         };
 
         try {
-            const session = await authService.login(data);
+            const session = await authService.createAccount(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
                 userData && dispatch(login(userData));
@@ -35,6 +36,7 @@ function Login() {
         } catch (error: unknown) {
             setError(getErrorMessage(error));
         }
+
     };
 
     return (
@@ -45,20 +47,28 @@ function Login() {
                         <Logo width="100%" />
                     </span>
                 </div>
-                <h2 className="text-center font-bold text-2xl leading-tight">Sign in to your account</h2>
-                <p>
-                    Don&apos;t have any account?&nbsp;
+                <h2 className="text-center font-bold text-2xl leading-tight">Sign up to create account</h2>
+                <p className="mt-2 text-center text-base text-black/60">
+                    Already have an account?&nbsp;
                     <Link
-                        to="/signup"
+                        to="/login"
                         className="font-medium text-pretty transition-all duration-200 hover:underline"
                     >
-                        Sign Up
+                        Sign In
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-                <form onSubmit={handleSubmit(handleLogin)} className="mt-8">
+                <form onSubmit={handleSubmit(handleSignup)} className="mt-8">
                     <div className="space-y-5">
+                        <Input
+                            label="Full Name: "
+                            type="text"
+                            placeholder="Enter your full name"
+                            {...register("name", {
+                                required: true
+                            })}
+                        />
                         <Input
                             label="Email: "
                             type="email"
@@ -86,7 +96,7 @@ function Login() {
                         <Button
                             type="submit"
                             className="w-full"
-                        >Sign in</Button>
+                        >Create Account</Button>
                     </div>
                 </form>
             </div>
@@ -94,4 +104,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Signup;
