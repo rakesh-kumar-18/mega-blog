@@ -2,10 +2,10 @@ import { ComponentPropsWithoutRef } from "react";
 
 interface Props extends ComponentPropsWithoutRef<'button'> {
     children: string | JSX.Element | JSX.Element[];
-    type: "button" | "submit" | "reset";
-    bgColor: string;
-    textColor: string;
-    className: string;
+    type?: "button" | "submit" | "reset";
+    bgColor?: string;
+    textColor?: string;
+    className?: string;
 }
 
 function Button({

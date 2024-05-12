@@ -1,10 +1,10 @@
 import { forwardRef, Ref, useId } from "react";
 
 interface Props {
-    label: string;
-    type: string;
-    placeholder: string;
-    className: string;
+    label?: string;
+    type?: string;
+    placeholder?: string;
+    className?: string;
 }
 
 const Input = forwardRef(function Input(props: Props, ref: Ref<HTMLInputElement>) {
