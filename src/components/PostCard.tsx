@@ -1,25 +1,20 @@
 import { Link } from "react-router-dom";
 import storageService from "../appwrite/storage";
+import { Props } from "../pages/AllPosts";
 
-type Props = {
-    $id: string;
-    title: string;
-    featuredImage: string;
-};
-
-function PostCard({ $id, title, featuredImage }: Props) {
+function PostCard(post: Props) {
     return (
-        <Link to={`/post/${$id}`}>
+        <Link to={`/post/${post.$id}`}>
             <div className="w-full bg-gray-100 rounded-xl p-4">
                 <div className="w-full justify-center mb-4">
                     <img
-                        src={`${storageService.getFilePreview(featuredImage)}`}
-                        alt={title}
+                        src={`${storageService.getFilePreview(post.featuredImage)}`}
+                        alt={post.title}
                         className="rounded-xl"
                     />
                 </div>
 
-                <h2 className="text-xl font-bold">{title}</h2>
+                <h2 className="text-xl font-bold">{post.title}</h2>
             </div>
         </Link>
     );

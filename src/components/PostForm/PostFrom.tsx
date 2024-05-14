@@ -3,27 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import databasesService from "../../appwrite/databases";
 import storageService from "../../appwrite/storage";
-import { Models } from "appwrite";
 import { useCallback, useEffect } from "react";
 import { Button, Input, Rte, Select } from "..";
+import { Props } from "../../pages/EditPost";
 
-export interface Props extends Models.Document {
-    title: string;
-    slug: string;
-    content: string;
-    status: "active" | "inactive";
-    featuredImage: string;
-    image: Array<File>;
-}
-
-function PostFrom(post: Props) {
+function PostFrom(post?: Props) {
     const { register, handleSubmit, control, setValue, watch, getValues } = useForm<Props>({
         defaultValues: {
             title: post?.title || "",
             slug: post?.slug || "",
             content: post?.content || "",
             status: post?.status || "active",
-            featuredImage: post?.featuredImage,
         }
     });
 

@@ -47,7 +47,7 @@ class DatabasesService {
         }
     }
 
-    async deletePost({ slug }: Post) {
+    async deletePost(slug: string) {
         try {
             await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
@@ -61,7 +61,7 @@ class DatabasesService {
         }
     }
 
-    async getPost({ slug }: Post) {
+    async getPost(slug: string) {
         try {
             return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
