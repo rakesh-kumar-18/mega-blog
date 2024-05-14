@@ -28,12 +28,14 @@ function Post() {
     }, [slug, navigate]);
 
     const deletePost = () => {
-        databasesService.deletePost(post.$id).then((status) => {
-            if (status) {
-                storageService.deleteFile(post.featuredImage);
-                navigate("/");
-            }
-        });
+        databasesService.deletePost(post.$id)
+            .then(status => {
+                if (status) {
+                    storageService.deleteFile(post.featuredImage);
+                    navigate("/");
+                }
+            })
+            .catch(error => console.log(error));
     };
 
     return post ? (
