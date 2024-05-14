@@ -66,7 +66,7 @@ function PostFrom(post: Props) {
     useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
-                setValue('slug', slugTransform(value.title as string));
+                setValue('slug', slugTransform(value.title as string), { shouldValidate: true });
             }
         });
 
